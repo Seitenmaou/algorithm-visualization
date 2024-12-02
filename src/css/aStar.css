@@ -1,0 +1,36 @@
+#pageContainer {
+  margin: 20px;
+  display: flex;
+}
+
+#gridContainer {
+  margin: 20px;
+}
+
+.cells {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 2px;
+  display: inline-block;
+  text-align: center;
+}
+
+.cells:hover {
+  background-color: #e0e0e0;
+}
+
+.start {
+  background-color: lime;
+}
+
+.target{
+  background-color: aqua;
+}
+
+.path{
+  background-color: yellow;
+}
+
+.checking{
+  background-color: orange;
+}

@@ -4,6 +4,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import Home from './pages/home';
 import AStar from './pages/aStar';

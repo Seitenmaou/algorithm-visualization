@@ -1,36 +1,167 @@
-#pageContainer {
-  margin: 20px;
+.container {
+  max-width: 100%;
   display: flex;
+  overflow: hidden;  /* Prevent overflow on the container */
+  justify-content: center;
+}
+
+#gridContainer, #menu, #gridData {
+  border: 4px solid black;
+  justify-content: center;
+  padding: 2px;
+  margin: 2px;
 }
 
 #gridContainer {
-  margin: 20px;
+  display: grid;
+  width: 60em;
+  height: 60em;
+  overflow: hidden;
+  justify-content: center;
+  align-content: center;
+}
+
+.gridDataContainer{
+  display: inline-block;
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.gridData {  /* Aligns children horizontally */
+  height: 45em;  /* Fixed height for the container */
+  width: 10em;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: auto;  /* Enable scrolling if content overflows */
+}
+
+.openData, .closedData {
+  flex: 1;  /* Ensures equal width for both columns */
+  flex-shrink: 0;  /* Prevents shrinking of the columns */
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-sizing: border-box;  /* Prevents padding from affecting overall size */
+  height: 100%;  /* Takes up the full height of gridData */
+  max-height: 100%;  /* Ensures height doesn't grow beyond the container */
+  min-height: 0;  /* Ensures it doesn't collapse in some cases */
+  overflow-y: auto;  /* Enable vertical scroll when content overflows */
+  overflow-x: auto;  /* Enable horizontal scroll when content overflows */
+}
+
+/* Remove right margin from the last column */
+.gridData > .closedData {
+  margin-right: 0;
 }
 
 .cells {
   border: 1px solid black;
-  padding: 10px;
-  margin: 2px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   text-align: center;
+  aspect-ratio: 1;  
+  font-size: 1.5em;
+  overflow: hidden;
+}
+
+.iconBackground {
+  font-size: 0.75em;
+}
+
+.cellLabel {
+  background-color: black;
+  color: white
+}
+
+/* Optional: Responsive adjustments */
+@media (max-width: 600px) {
+  .cells {
+    width: 2em;
+    height: 2em;
+    font-size: 1.2em;
+  }
 }
 
 .cells:hover {
   background-color: #e0e0e0;
 }
 
+
+
+
+/* CSS for weight classes */
+.weight-1 {
+  background-color: #ffffff; /* white */
+  color: #000000; /* black */
+}
+
+.weight-2 {
+  background-color: #f2f2f2;
+  color: #000000;
+}
+
+.weight-3 {
+  background-color: #e6e6e6;
+  color: #000000;
+}
+
+.weight-4 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+.weight-5 {
+  background-color: #b3b3b3;
+  color: #000000;
+}
+
+.weight-6 {
+  background-color: #999999;
+  color: #ffffff; /* white */
+}
+
+.weight-7 {
+  background-color: #808080;
+  color: #ffffff;
+}
+
+.weight-8 {
+  background-color: #666666;
+  color: #ffffff;
+}
+
+.weight-9 {
+  background-color: #4d4d4d;
+  color: #ffffff;
+}
+
+.weight-999 {
+  background-color: #000000; /* black */
+  color: #ffffff; /* white */
+}
+
+
+/* Make icons smaller but keep text size the same */
+.start, .target, .path, .checking {
+  font-weight: bold; /* Bolds the text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), -1px -1px 2px rgba(0, 0, 0, 0.5); /* Outline effect */
+}
+
+
 .start {
-  background-color: lime;
+  color: #dc0073;
 }
 
-.target{
-  background-color: aqua;
+.target {
+  color: #04e762;
 }
 
-.path{
-  background-color: yellow;
+.path {
+  color: #008bf8;
 }
 
-.checking{
-  background-color: orange;
+.checking {
+  color: #f5b700;
 }

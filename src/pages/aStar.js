@@ -7,24 +7,25 @@ import Button from 'react-bootstrap/Button'
 export default function AStar() {
     const [gridWidth, setGridWidth] = useState(15);
     const [gridHeight, setGridHeight] = useState(15);
-    const [grid, setGrid] = useState([]);
-    const [start, setStart] = useState({ x: 0, y: 0, weight: 1, g: 0, h: 0, f: 0 });
-    const [target, setTarget] = useState({ x: gridHeight - 1, y: gridWidth - 1, weight: 1, g: 0, h: 0, f: 0 });
     const [gridReset, setGridReset] = useState(false)
     const [simulating, setSimulating] = useState(false)
     const [simulated, setSimulated] = useState(false)
-    const [diagonalsAllowed, setDiagonalsAllowed] = useState(false)
     const [cellChanger, setCellChanger] = useState(null);
     const [minSpeed, setMinSpeed] = useState(50)
     const numberOptions = [1,9,999]
+    const [squareSize, setSquareSize] = useState(10);
+    
+    const [start, setStart] = useState({ x: 0, y: 0, weight: 1, g: 0, h: 0, f: 0 });
+    const [target, setTarget] = useState({ x: gridHeight - 1, y: gridWidth - 1, weight: 1, g: 0, h: 0, f: 0 });
+    const [grid, setGrid] = useState([]);
+    const [diagonalsAllowed, setDiagonalsAllowed] = useState(false)
     const [openListDisplay, setOpenListDisplay] = useState([])
     const [closedListDisplay, setClosedListDisplay] = useState([])
     const [pathCost, setPathCost] = useState(0)
-    const [squareSize, setSquareSize] = useState(10);
   
 
     useEffect(() => {
-      // Calculate the available space and adjust square size dynamically
+      //calculate size of square to fit in visual section
         const gridContainer = document.getElementById('gridContainer');
         const containerWidth = gridContainer.offsetWidth;
         const containerHeight = gridContainer.offsetHeight;
@@ -36,22 +37,23 @@ export default function AStar() {
         setSquareSize(newSquareSize);
     }, [grid]);
 
-    // Handle changes from the input field
+    //TODO: fix low numbers
+    // handle changes in width
     const handleWidthInputChange = (event) => {
       const inputValue = Number(event.target.value);
       
-      // Ensure the value stays between 0 and 100
+      // value should be between 1 and 100
       if (!isNaN(inputValue) && inputValue > 0 && inputValue <= 100) {
         setGridWidth(inputValue);
         // setGridReset(true)
       }
     }
   
-    // Handle changes from the input field
+    // handle changes in height
     const handleHeightInputChange = (event) => {
       const inputValue = Number(event.target.value);
       
-      // Ensure the value stays between 0 and 100
+      //  value should be between 1 and 100
       if (!isNaN(inputValue) && inputValue > 0 && inputValue <= 100) {
         setGridHeight(inputValue);
       }
@@ -144,6 +146,7 @@ export default function AStar() {
           gridArray.push(row);
       }
       setGrid(gridArray);
+      setPathCost(0)
       setGridReset(true);
   }
 
@@ -196,9 +199,9 @@ export default function AStar() {
       newGrid[newTarget.x][newTarget.y].status = 'target';
   
       setGrid(newGrid);
+      setSimulated(false)
   }
   
-    // manhattan distance heuristic
     function manhattanDistance(a,b) {
         return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
     }
@@ -314,6 +317,7 @@ export default function AStar() {
         let travelledPath = new Map();
         let neighborDirections;
 
+        // used later in a for loop to get neighbors
         if (diagonalsAllowed) {
           neighborDirections = [
             { x: 0, y: 1 },
@@ -347,10 +351,11 @@ export default function AStar() {
             await new Promise(resolve => setTimeout(resolve, minSpeed));
         }
         setSimulating(false)
-        console.log("No Path... HOW?"); //SHOULD NEVER GET HERE BECAUSE THERES NO WALLS
+        console.log("No Path... HOW?"); //SHOULD NEVER GET HERE BECAUSE THERES NO WALLS //TODO: probably should add walls
         return null;
     }
 
+    //set size of cells to fit more of smaller or less of larger ones
     const cellStyle = {
       width: `${squareSize}px`,
       height: `${squareSize}px`,
